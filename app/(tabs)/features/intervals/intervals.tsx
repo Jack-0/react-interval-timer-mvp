@@ -1,38 +1,33 @@
-import { StyleSheet } from "react-native";
-
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
-import { Link } from "expo-router";
+import { useRouter } from "expo-router";
+import React from "react";
+import { Button, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { IntervalItem } from "./components/IntervalItem";
+import { useIntervals } from "./context/IntervalsContext";
 
-export default function IntervalList() {
+const Intervals: React.FC = () => {
+  const { intervals } = useIntervals();
+  const router = useRouter();
+
   return (
-    <SafeAreaView>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Intervals</ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}></ThemedView>
-      <Link href={"/(tabs)/features/intervals/interval_config"}>config</Link>
-      <Link href={"/(tabs)/features/intervals/interval_use"}>do</Link>
+    <SafeAreaView style={{ padding: 20 }}>
+      {/* SHOW ALL INTERVALS */}
+      <FlatList
+        data={intervals}
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={({ item, index }) => (
+          <IntervalItem interval={item} index={index} />
+        )}
+      />
+      {/* CREATE NEW INTERVAL */}
+      <Button
+        title="Create New Interval"
+        onPress={() => {
+          router.push("/(tabs)/features/intervals/IntervalForm");
+        }}
+      ></Button>
     </SafeAreaView>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: "absolute",
-  },
-});
+export default Intervals;
