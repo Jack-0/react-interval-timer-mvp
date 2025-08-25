@@ -1,11 +1,11 @@
 import { ThemedText } from "@/components/ThemedText";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, useRef, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useIntervals } from "./context/IntervalsContext";
 import { IntervalMode } from "./types";
-
 
 // Route params
 type RouteParams = {
@@ -37,12 +37,12 @@ export default function IntervalStart() {
 
     /** Every second check if we have ran the timer down to zero. Once we have handlePhaseEnd() */
     timerRef.current = setInterval(() => {
-      console.log(currentTimeLeft)
+      console.log(currentTimeLeft);
       if (!paused) {
         setCurrentTimeLeft((prev) => {
           if (prev > 1) return prev - 1;
           handlePhaseEnd();
-          return prev; 
+          return prev;
         });
       }
     }, 1000);
@@ -63,10 +63,10 @@ export default function IntervalStart() {
       return;
     }
 
-    // 'Work' transitions into 'Set Rest' or 'Finished'... 
+    // 'Work' transitions into 'Set Rest' or 'Finished'...
     // Note: only 'Work' translates to 'Finished' as we check at the end of a rep if that was the last in the set
     if (activeMode === "Work") {
-      // if more reps left in the set goto Rest      
+      // if more reps left in the set goto Rest
       if (currentRep < interval.repCount) {
         setActiveMode("Rest");
         setCurrentTimeLeft(interval.repRest);
@@ -104,34 +104,96 @@ export default function IntervalStart() {
     }
   }
 
+  /** Split time into 4 values mm:ss as m1m2:s1s2 */
+  function splitTime(seconds: number) {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    const m1 = Math.floor(mins / 10);
+    const m2 = mins % 10;
+    const s1 = Math.floor(secs / 10);
+    const s2 = secs % 10;
+
+    return { m1, m2, s1, s2 };
+  }
+  const { m1, m2, s1, s2 } = splitTime(currentTimeLeft);
+
+
+  function colorFromMode(mode:IntervalMode){
+    switch(mode){
+      case "Work": 
+        return "#fe6100"
+      case "Rest": 
+        return "#648fff"
+      case "Set Rest": 
+        return "#648fff"
+      case "Warmup":
+        return "#785ef0"
+    }
+    return "#785ef0"
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       {interval === undefined ? (
-        <ThemedText>Interval not found!</ThemedText>
-      ) : (
+        <ThemedText>Interval not found!</ThemedText>) : (
         <>
           <Text style={styles.title}>{interval?.name}</Text>
 
-          <Text style={styles.timer}>{currentTimeLeft}</Text>
-          <Text style={styles.mode}>{activeMode}</Text>
+          <View style={{flex:1}}></View>
 
-          <Text>
+          <View
+            style={[activeMode != "Finished" ? styles.timerBox : null, activeMode != "Finished" ? {backgroundColor: colorFromMode(activeMode)} : null]}
+          >
+            {/* TIMER FORMATTING (required for none mono-spaced font) */}
+            {activeMode == "Finished" ? (<Text style={styles.timer}>🥳</Text>) : (
+              <>
+                <Text style={styles.timer}>{m1}</Text>
+                <Text style={styles.timer}>{m2}</Text>
+                <Text style={styles.timer}>:</Text>
+                <Text style={styles.timer}>{s1}</Text>
+                <Text style={styles.timer}>{s2}</Text>
+              </>
+            )}
+          </View>
+
+          <View style={{flex:1}}></View>
+
+          <Text style={[styles.mode, {color:colorFromMode(activeMode)}]}>{activeMode}</Text>
+
+          <ThemedText>
             Rep {currentRep} of {interval?.repCount}
-          </Text>
-          <Text>
+          </ThemedText>
+          <ThemedText>
             Set {currentSet} of {interval?.setCount}
-          </Text>
-          <Text>
-            Total reps {totalRepsDone} of {interval.repCount * interval.setCount}
-          </Text>
- 
+          </ThemedText>
+          <ThemedText>
+            Total reps {totalRepsDone} of{" "}
+            {interval.repCount * interval.setCount}
+          </ThemedText>
+
+
+
+          <View style={{flexDirection:"row"}}>
 
           <TouchableOpacity
             onPress={() => setPaused((p) => !p)}
             style={styles.button}
           >
-            <Text style={styles.buttonText}>{paused ? "Resume" : "Pause"}</Text>
+            <ThemedText style={styles.buttonText}>
+              {paused ? "Resume" : "Pause"}
+            </ThemedText>
+{paused ? (
+
+              <FontAwesome6 name="play" size={20} color="black"/>
+) : (
+
+              <FontAwesome6 name="pause" size={20} color="black"/>
+)}
           </TouchableOpacity>
+          </View>
+
+
+          <View style={{flex:1}}></View>
         </>
       )}
     </SafeAreaView>
@@ -143,30 +205,47 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 16,
+    padding: 54
   },
   title: {
-    fontSize: 24,
-    fontWeight: "bold",
+    fontSize: 42,
+    fontWeight: 600,
     marginBottom: 20,
+    fontFamily:"QuickSand",
+    textAlign:"center"
   },
   timer: {
     fontSize: 64,
+    minWidth: 40,
+    fontFamily: "QuickSand",
     fontWeight: "bold",
-    marginVertical: 20,
+    textAlign: "center",
   },
+  timerBox:{
+              justifyContent: "space-around",
+              alignItems: "center",
+              flexDirection: "row",
+              gap: 0,
+              borderWidth: 5,
+              borderRadius: 10,
+              padding: 10
+            },
   mode: {
     fontSize: 28,
     marginBottom: 20,
+    fontWeight: "bold",
+    fontFamily:"QuickSand"
   },
   button: {
+    flex:1,
     marginTop: 30,
-    backgroundColor: "#007AFF",
     padding: 12,
-    borderRadius: 8,
+    borderRadius: 10,
+    borderWidth: 2,
+    textAlign: "center",
+    alignItems: "center"
   },
   buttonText: {
-    color: "white",
     fontSize: 18,
     fontWeight: "bold",
   },

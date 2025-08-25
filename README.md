@@ -18,5 +18,10 @@ Interval feature readme.md found at [./app/(tabs)/features/intervals/readme.md](
    npx expo start
    ```
 
+3. (Optional) run native ios
+   ```bash
+   npx expo run:ios --device
+   ```
+
 # Stack
 - [Expo](https://expo.dev)

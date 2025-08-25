@@ -5,11 +5,19 @@ import { Interval } from "../types";
 // TODO: prototype data in lieu of an api
 const intervalsExample: Interval[] = [
 {
+    name: "Demo (Near Instant)",
+    repCount: 1,
+    repTime: 1,
+    repRest: 1,
+    setRest: 1, 
+    setCount: 1,
+  },
+{
     name: "Demo (Fast)",
     repCount: 2,
     repTime: 2,
     repRest: 3,
-    setRest: 10, // 4min
+    setRest: 10,
     setCount: 2,
   },
   {
@@ -71,7 +79,6 @@ export const IntervalsProvider: React.FC<{ children: ReactNode }> = ({
     setIntervals((prev) => [...prev, interval]);
 
   const updateInterval = (index: number, interval: Interval) => {
-    console.log(typeof(index)) // TODO: look into (assumption is string is passed from IntervalItem.tsx)
     setIntervals((prev) =>
       prev.map((item, i) => (i == index  ? interval : item)),
     );
