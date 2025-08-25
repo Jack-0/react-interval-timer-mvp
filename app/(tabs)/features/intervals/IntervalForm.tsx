@@ -1,7 +1,13 @@
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useMemo, useState } from "react";
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useIntervals } from "./context/IntervalsContext";
 import { Interval } from "./types";
@@ -54,20 +60,20 @@ export default function IntervalForm() {
     navigation.goBack();
   };
 
-  const validName = useMemo(()=>{
+  const validName = useMemo(() => {
     return name !== "";
-  },[name])
+  }, [name]);
 
-const validReps = useMemo(()=>{
-    return Number(repCount) > 0 && Number(repTime) >0 && Number(repRest) > 0
-  },[repCount, repTime, repRest])
+  const validReps = useMemo(() => {
+    return Number(repCount) > 0 && Number(repTime) > 0 && Number(repRest) > 0;
+  }, [repCount, repTime, repRest]);
 
-  const validSets = useMemo(()=>{
-return Number(setCount) > 0 && Number(setRest) > 0
-  }, [setCount, setRest])
+  const validSets = useMemo(() => {
+    return Number(setCount) > 0 && Number(setRest) > 0;
+  }, [setCount, setRest]);
 
   const validForm = useMemo(() => {
-    return validName && validReps && validSets
+    return validName && validReps && validSets;
   }, [validName, validReps, validSets]);
 
   const handleDelete = () => {
@@ -79,11 +85,11 @@ return Number(setCount) > 0 && Number(setRest) > 0
   return (
     <SafeAreaView style={styles.container}>
       {/* NAME */}
-      <View style={{flexDirection:"row"}}>
-      <Text style={styles.label}>Interval Name</Text>
-      {!validName ? (
-        <Text style={[styles.label, styles.labelRed]}> *required</Text>
-      ):(null)}
+      <View style={{ flexDirection: "row" }}>
+        <Text style={styles.label}>Interval Name</Text>
+        {!validName ? (
+          <Text style={[styles.label, styles.labelRed]}> *required</Text>
+        ) : null}
       </View>
       <TextInput
         maxLength={50}
@@ -93,11 +99,14 @@ return Number(setCount) > 0 && Number(setRest) > 0
         placeholder="Interval Name"
       />
       {/* REPETITIONS */}
-      <View style={{flexDirection:"row"}}>
+      <View style={{ flexDirection: "row" }}>
         <Text style={styles.label}>Repetitions</Text>
-  {!validReps ? (
-          <Text style={[styles.label, styles.labelRed]}> *zero values not allowed</Text>
-        ):(null)}
+        {!validReps ? (
+          <Text style={[styles.label, styles.labelRed]}>
+            {" "}
+            *zero values not allowed
+          </Text>
+        ) : null}
       </View>
       <View style={styles.spacedItems}>
         <View style={styles.labeledBox}>
@@ -134,12 +143,15 @@ return Number(setCount) > 0 && Number(setRest) > 0
         </View>
       </View>
       {/* SETS */}
-<View style={{flexDirection:"row"}}>
+      <View style={{ flexDirection: "row" }}>
         <Text style={styles.label}>Sets</Text>
-  {!validSets ? (
-          <Text style={[styles.label, styles.labelRed]}> *zero values not allowed</Text>
-        ):(null)}
-        </View>
+        {!validSets ? (
+          <Text style={[styles.label, styles.labelRed]}>
+            {" "}
+            *zero values not allowed
+          </Text>
+        ) : null}
+      </View>
       <View style={styles.spacedItems}>
         <View style={styles.labeledBox}>
           <Text style={styles.label}>Total</Text>
@@ -163,38 +175,48 @@ return Number(setCount) > 0 && Number(setRest) > 0
         </View>
       </View>
 
-
       <Text style={styles.label}>Configure</Text>
       <View style={styles.spacedItems}>
-
-      <TouchableOpacity onPress={handleSave} style={[styles.button, !validForm ? styles.buttonDisabled : null]} disabled={!validForm}>
-          <Text style={[styles.buttonText, !validForm ? styles.buttonTextDisabled : null]}
-          >Save</Text>
-          <FontAwesome6 name="square-check" size={20} color={!validForm ? "gray" : "black"}/>
+        <TouchableOpacity
+          onPress={handleSave}
+          style={[styles.button, !validForm ? styles.buttonDisabled : null]}
+          disabled={!validForm}
+        >
+          <Text
+            style={[
+              styles.buttonText,
+              !validForm ? styles.buttonTextDisabled : null,
+            ]}
+          >
+            Save
+          </Text>
+          <FontAwesome6
+            name="square-check"
+            size={20}
+            color={!validForm ? "gray" : "black"}
+          />
         </TouchableOpacity>
 
-      {existingInterval !== undefined ? (
-      <TouchableOpacity  onPress={handleDelete} style={styles.button}>
-          <Text style={styles.buttonText}
-          >Delete</Text>
-          <FontAwesome6 name="trash" size={20} color="black"/>
-        </TouchableOpacity>):(null)}
+        {existingInterval !== undefined ? (
+          <TouchableOpacity onPress={handleDelete} style={styles.button}>
+            <Text style={styles.buttonText}>Delete</Text>
+            <FontAwesome6 name="trash" size={20} color="black" />
+          </TouchableOpacity>
+        ) : null}
       </View>
-
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-
   labeledBox: {
-    flexDirection:"column", 
+    flexDirection: "column",
     textAlign: "center",
     alignContent: "center",
-    alignItems: "center"
-  }, 
+    alignItems: "center",
+  },
 
-  spacedItems: { flexDirection:"row", justifyContent:"center", gap:20},
+  spacedItems: { flexDirection: "row", justifyContent: "center", gap: 20 },
 
   container: {
     padding: 20,
@@ -206,43 +228,43 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 6,
     marginTop: 12,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
-  labelRed:{
-    color:"red"
+  labelRed: {
+    color: "red",
   },
   input: {
     fontFamily: "QuickSand",
-    textAlign:"center",
+    textAlign: "center",
     fontWeight: 500,
     borderWidth: 2,
     borderColor: "black",
     borderRadius: 8,
     padding: 10,
     fontSize: 16,
-    minWidth: 54
+    minWidth: 54,
   },
 
-   button: {
+  button: {
     marginVertical: 8,
     borderWidth: 2,
     borderRadius: 10,
     padding: 7,
     alignItems: "center",
-    flex:1
+    flex: 1,
   },
   buttonDisabled: {
-    color:"gray",
-    borderColor:"gray"
+    color: "gray",
+    borderColor: "gray",
   },
 
-  buttonText:{
+  buttonText: {
     fontFamily: "QuickSand",
     fontWeight: 500,
     fontSize: 18,
   },
   buttonTextDisabled: {
-    color:"gray",
-    borderColor:"gray"
+    color: "gray",
+    borderColor: "gray",
   },
 });

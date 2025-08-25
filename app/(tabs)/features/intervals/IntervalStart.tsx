@@ -116,35 +116,42 @@ export default function IntervalStart() {
   }
   const { m1, m2, s1, s2 } = splitTime(currentTimeLeft);
 
-
-  function colorFromMode(mode:IntervalMode){
-    switch(mode){
-      case "Work": 
-        return "#fe6100"
-      case "Rest": 
-        return "#648fff"
-      case "Set Rest": 
-        return "#648fff"
+  function colorFromMode(mode: IntervalMode) {
+    switch (mode) {
+      case "Work":
+        return "#fe6100";
+      case "Rest":
+        return "#648fff";
+      case "Set Rest":
+        return "#648fff";
       case "Warmup":
-        return "#785ef0"
+        return "#785ef0";
     }
-    return "#785ef0"
+    return "#785ef0";
   }
 
   return (
     <SafeAreaView style={styles.container}>
       {interval === undefined ? (
-        <ThemedText>Interval not found!</ThemedText>) : (
+        <ThemedText>Interval not found!</ThemedText>
+      ) : (
         <>
           <Text style={styles.title}>{interval?.name}</Text>
 
-          <View style={{flex:1}}></View>
+          <View style={{ flex: 1 }}></View>
 
           <View
-            style={[activeMode != "Finished" ? styles.timerBox : null, activeMode != "Finished" ? {backgroundColor: colorFromMode(activeMode)} : null]}
+            style={[
+              activeMode != "Finished" ? styles.timerBox : null,
+              activeMode != "Finished"
+                ? { backgroundColor: colorFromMode(activeMode) }
+                : null,
+            ]}
           >
             {/* TIMER FORMATTING (required for none mono-spaced font) */}
-            {activeMode == "Finished" ? (<Text style={styles.timer}>🥳</Text>) : (
+            {activeMode == "Finished" ? (
+              <Text style={styles.timer}>🥳</Text>
+            ) : (
               <>
                 <Text style={styles.timer}>{m1}</Text>
                 <Text style={styles.timer}>{m2}</Text>
@@ -155,9 +162,11 @@ export default function IntervalStart() {
             )}
           </View>
 
-          <View style={{flex:1}}></View>
+          <View style={{ flex: 1 }}></View>
 
-          <Text style={[styles.mode, {color:colorFromMode(activeMode)}]}>{activeMode}</Text>
+          <Text style={[styles.mode, { color: colorFromMode(activeMode) }]}>
+            {activeMode}
+          </Text>
 
           <ThemedText>
             Rep {currentRep} of {interval?.repCount}
@@ -170,29 +179,23 @@ export default function IntervalStart() {
             {interval.repCount * interval.setCount}
           </ThemedText>
 
-
-
-          <View style={{flexDirection:"row"}}>
-
-          <TouchableOpacity
-            onPress={() => setPaused((p) => !p)}
-            style={styles.button}
-          >
-            <ThemedText style={styles.buttonText}>
-              {paused ? "Resume" : "Pause"}
-            </ThemedText>
-{paused ? (
-
-              <FontAwesome6 name="play" size={20} color="black"/>
-) : (
-
-              <FontAwesome6 name="pause" size={20} color="black"/>
-)}
-          </TouchableOpacity>
+          <View style={{ flexDirection: "row" }}>
+            <TouchableOpacity
+              onPress={() => setPaused((p) => !p)}
+              style={styles.button}
+            >
+              <ThemedText style={styles.buttonText}>
+                {paused ? "Resume" : "Pause"}
+              </ThemedText>
+              {paused ? (
+                <FontAwesome6 name="play" size={20} color="black" />
+              ) : (
+                <FontAwesome6 name="pause" size={20} color="black" />
+              )}
+            </TouchableOpacity>
           </View>
 
-
-          <View style={{flex:1}}></View>
+          <View style={{ flex: 1 }}></View>
         </>
       )}
     </SafeAreaView>
@@ -204,14 +207,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 54
+    padding: 54,
   },
   title: {
     fontSize: 42,
     fontWeight: 600,
     marginBottom: 20,
-    fontFamily:"QuickSand",
-    textAlign:"center"
+    fontFamily: "QuickSand",
+    textAlign: "center",
   },
   timer: {
     fontSize: 64,
@@ -220,29 +223,29 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
-  timerBox:{
-              justifyContent: "space-around",
-              alignItems: "center",
-              flexDirection: "row",
-              gap: 0,
-              borderWidth: 5,
-              borderRadius: 10,
-              padding: 10
-            },
+  timerBox: {
+    justifyContent: "space-around",
+    alignItems: "center",
+    flexDirection: "row",
+    gap: 0,
+    borderWidth: 5,
+    borderRadius: 10,
+    padding: 10,
+  },
   mode: {
     fontSize: 28,
     marginBottom: 20,
     fontWeight: "bold",
-    fontFamily:"QuickSand"
+    fontFamily: "QuickSand",
   },
   button: {
-    flex:1,
+    flex: 1,
     marginTop: 30,
     padding: 12,
     borderRadius: 10,
     borderWidth: 2,
     textAlign: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   buttonText: {
     fontSize: 18,

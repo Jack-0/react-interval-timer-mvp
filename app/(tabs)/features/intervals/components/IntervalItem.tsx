@@ -15,7 +15,6 @@ export const IntervalItem: React.FC<Props> = ({ interval, index }) => {
   const router = useRouter();
 
   return (
-
     <View
       style={{
         marginVertical: 8,
@@ -25,52 +24,55 @@ export const IntervalItem: React.FC<Props> = ({ interval, index }) => {
         // borderWidth: 2,
         flex: 1,
         justifyContent: "flex-start",
-        flexDirection: "row"
+        flexDirection: "row",
       }}
     >
-      <TouchableOpacity onPress={() => {
-            router.push({
-              pathname: "/(tabs)/features/intervals/IntervalStart",
-              params: { index: index },
-            });
-          }
-
-      }
-      style={styles.left}
+      <TouchableOpacity
+        onPress={() => {
+          router.push({
+            pathname: "/(tabs)/features/intervals/IntervalStart",
+            params: { index: index },
+          });
+        }}
+        style={styles.left}
       >
-
-        <Text numberOfLines={1} style={styles.header}>{interval.name}</Text>
-        <Text style={styles.body}>{interval.setCount} {interval.setCount > 1 ? "sets" : "set"} with</Text>
-        <Text style={styles.body}>{interval.repCount } {interval.repCount > 1 ? "reps" : "rep"} at {interval.repTime} (sec) each ({interval.repRest} sec rest) </Text>
+        <Text numberOfLines={1} style={styles.header}>
+          {interval.name}
+        </Text>
+        <Text style={styles.body}>
+          {interval.setCount} {interval.setCount > 1 ? "sets" : "set"} with
+        </Text>
+        <Text style={styles.body}>
+          {interval.repCount} {interval.repCount > 1 ? "reps" : "rep"} at{" "}
+          {interval.repTime} (sec) each ({interval.repRest} sec rest){" "}
+        </Text>
       </TouchableOpacity>
 
-
       <TouchableOpacity
-        style={
-            styles.right
-          }
-      onPress={() => {
-              router.push({
-                pathname: "/(tabs)/features/intervals/IntervalForm",
-                params: { index: index },
-              });
-            }}>
-              <Text style={styles.body}>Edit</Text>
-              <FontAwesome6 name="pen-to-square" size={20} color="black"/>
+        style={styles.right}
+        onPress={() => {
+          router.push({
+            pathname: "/(tabs)/features/intervals/IntervalForm",
+            params: { index: index },
+          });
+        }}
+      >
+        <Text style={styles.body}>Edit</Text>
+        <FontAwesome6 name="pen-to-square" size={20} color="black" />
       </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  header:{
+  header: {
     fontFamily: "QuickSand",
     fontWeight: "bold",
     fontSize: 18,
   },
   body: {
     fontSize: 16,
-    fontFamily: "QuickSand"
+    fontFamily: "QuickSand",
   },
 
   left: {
@@ -94,7 +96,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     minWidth: 60,
     maxWidth: 60,
-    height: "100%"
+    height: "100%",
   },
 });
-

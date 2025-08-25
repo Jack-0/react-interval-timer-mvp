@@ -1,6 +1,5 @@
 /** Represents the options for the current active interval */
-export type IntervalMode = "Warmup" | "Work" | "Rest" | "Set Rest" | "Finished"
-
+export type IntervalMode = "Warmup" | "Work" | "Rest" | "Set Rest" | "Finished";
 
 /**
  * Represents a workout interval.
@@ -20,20 +19,20 @@ export type Interval = {
   repTime: number;
 
   /** optional workout details */
-  workoutDetails?: WorkoutDetails
+  workoutDetails?: WorkoutDetails;
 };
 
 export type WorkoutDetails = {
   /** Optional description of load required */
-  load: Load
+  load: Load;
   /** Required equipment */
-  equipment: "edge" | "hangboard" 
-}
+  equipment: "edge" | "hangboard";
+};
 
 export type Load = {
-    loadType: "kg" | "percentage"
-    value: number
-}
+  loadType: "kg" | "percentage";
+  value: number;
+};
 
 // TODO: guid would be included here with link to backend (name might be a unique key)
 // TODO: could have a favourite option, UI would order by fav first

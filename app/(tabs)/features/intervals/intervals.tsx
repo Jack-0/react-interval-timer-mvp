@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IntervalItem } from "./components/IntervalItem";
@@ -20,7 +20,6 @@ export default function Intervals() {
   return (
     <ScrollView>
       <SafeAreaView style={{ padding: 28 }}>
-
         {/* SHOW ALL INTERVALS */}
         <FlatList
           data={intervals}
@@ -31,31 +30,25 @@ export default function Intervals() {
           scrollEnabled={false}
         />
         {/* CREATE NEW INTERVAL */}
-        <TouchableOpacity  onPress={()=>router.push("/(tabs)/features/intervals/IntervalForm")}
-          style={
-            styles.button}
-          >
-          <Text style={styles.buttonText}
-          >Create New Interval</Text>
-          <FontAwesome6 name="add" size={20} color="black"/>
+        <TouchableOpacity
+          onPress={() => router.push("/(tabs)/features/intervals/IntervalForm")}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Create New Interval</Text>
+          <FontAwesome6 name="add" size={20} color="black" />
         </TouchableOpacity>
 
-        
-        <View style={{height:50}}></View>
-
+        <View style={{ height: 50 }}></View>
       </SafeAreaView>
     </ScrollView>
   );
-};
-
-
+}
 
 const styles = StyleSheet.create({
-
-  buttonText:{
+  buttonText: {
     fontFamily: "QuickSand",
     fontWeight: 500,
-    fontSize: 18
+    fontSize: 18,
   },
   button: {
     marginVertical: 8,
@@ -63,18 +56,17 @@ const styles = StyleSheet.create({
     // backgroundColor: 'skyblue',
     borderRadius: 10,
     padding: 7,
-    alignItems: "center"
+    alignItems: "center",
   },
 
-
-  header:{
+  header: {
     fontFamily: "QuickSand",
     fontWeight: "bold",
     fontSize: 18,
   },
   body: {
     fontSize: 16,
-    fontFamily: "QuickSand"
+    fontFamily: "QuickSand",
   },
 
   left: {
@@ -97,7 +89,6 @@ const styles = StyleSheet.create({
     alignContent: "center",
     minWidth: 60,
     maxWidth: 60,
-    height: "100%"
+    height: "100%",
   },
 });
-

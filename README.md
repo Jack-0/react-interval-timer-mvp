@@ -1,11 +1,11 @@
 # Interval Timer MVP
 
-The interval timer feature is found at [./app/(tabs)/features/intervals](./app/(tabs)/features/intervals).
+The interval timer feature is found at [./app/(tabs)/features/intervals](<./app/(tabs)/features/intervals>).
 
-Interval feature readme.md found at [./app/(tabs)/features/intervals/readme.md](./app/(tabs)/features/intervals/readme.md).
-
+Interval feature readme.md found at [./app/(tabs)/features/intervals/readme.md](<./app/(tabs)/features/intervals/readme.md>).
 
 # Quick Start
+
 1. Install dependencies
 
    ```bash
@@ -24,4 +24,5 @@ Interval feature readme.md found at [./app/(tabs)/features/intervals/readme.md](
    ```
 
 # Stack
+
 - [Expo](https://expo.dev)

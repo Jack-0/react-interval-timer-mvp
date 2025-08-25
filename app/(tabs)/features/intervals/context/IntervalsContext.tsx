@@ -4,15 +4,15 @@ import { Interval } from "../types";
 
 // TODO: prototype data in lieu of an api
 const intervalsExample: Interval[] = [
-{
+  {
     name: "Demo (Near Instant)",
     repCount: 1,
     repTime: 1,
     repRest: 1,
-    setRest: 1, 
+    setRest: 1,
     setCount: 1,
   },
-{
+  {
     name: "Demo (Fast)",
     repCount: 2,
     repTime: 2,
@@ -80,10 +80,9 @@ export const IntervalsProvider: React.FC<{ children: ReactNode }> = ({
 
   const updateInterval = (index: number, interval: Interval) => {
     setIntervals((prev) =>
-      prev.map((item, i) => (i == index  ? interval : item)),
+      prev.map((item, i) => (i == index ? interval : item)),
     );
-
-  }
+  };
 
   const removeInterval = (index: number) =>
     setIntervals((prev) => prev.filter((_, i) => i != index));
