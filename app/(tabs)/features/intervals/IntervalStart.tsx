@@ -1,6 +1,7 @@
 import { ThemedText } from "@/components/ThemedText";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
+import { useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -14,7 +15,7 @@ type RouteParams = {
 
 export default function IntervalStart() {
   const route = useRoute();
-  const navigation = useNavigation();
+  const router = useRouter();
   const { index } = route.params as RouteParams;
   const { intervals } = useIntervals();
   const interval = index !== undefined ? intervals[index] : undefined;
@@ -169,6 +170,7 @@ export default function IntervalStart() {
             {activeMode}
           </Text>
 
+          {/* REP SUMMARY */}
           <ThemedText>
             Rep {currentRep} of {interval?.repCount}
           </ThemedText>
@@ -181,23 +183,39 @@ export default function IntervalStart() {
           </ThemedText>
 
           {activeMode != "Finished" ? (
+            // PLAY PAUSE OPTION
+            <View style={{ flexDirection: "row" }}>
+              <TouchableOpacity
+                onPress={() => setPaused((p) => !p)}
+                style={styles.button}
+              >
+                <Text style={styles.buttonText}>
+                  {paused ? "Resume" : "Pause"}
+                </Text>
+                {paused ? (
+                  <FontAwesome6 name="play" size={24} color="black" />
+                ) : (
+                  <FontAwesome6 name="pause" size={24} color="black" />
+                )}
+              </TouchableOpacity>
+            </View>
+          ) : (
+            // FINISHED RETURN HOME
+            <View style={{ flexDirection: "row" }}>
 
-          <View style={{ flexDirection: "row" }}>
             <TouchableOpacity
-              onPress={() => setPaused((p) => !p)}
+              onPress={() =>
+                router.push({
+                  pathname: "/(tabs)/features/intervals/Intervals",
+                })
+              }
               style={styles.button}
             >
-              <Text style={styles.buttonText}>
-                {paused ? "Resume" : "Pause"}
-              </Text>
-              {paused ? (
-                <FontAwesome6 name="play" size={24} color="black" />
-              ) : (
-                <FontAwesome6 name="pause" size={24} color="black" />
-              )}
+              <Text style={styles.buttonText}>Return</Text>
+              <FontAwesome6 name="arrow-rotate-left" size={24} color="black" />
             </TouchableOpacity>
-          </View>
-          ) : <Text style={[styles.infoText, {padding:8}]}>Good effort!</Text>}
+            </View>
+          )}
 
           <View style={{ flex: 1 }}></View>
         </>
@@ -207,7 +225,7 @@ export default function IntervalStart() {
 }
 
 const styles = StyleSheet.create({
-  infoText:{
+  infoText: {
     fontFamily: "QuickSand",
     textAlign: "center",
     fontSize: 16,
