@@ -23,7 +23,7 @@ export default function IntervalStart() {
 
   const [currentTimeLeft, setCurrentTimeLeft] = useState<number>(WARM_UP_TIME);
   const [activeMode, setActiveMode] = useState<IntervalMode>("Warmup");
-  const [currentRep, setCurrentRep] = useState<number>(1);
+  const [currentRep, setCurrentRep] = useState<number>(0);
   const [totalRepsDone, setTotalRepsDone] = useState<number>(0);
   const [currentSet, setCurrentSet] = useState<number>(1);
   const [paused, setPaused] = useState<boolean>(false);
@@ -58,6 +58,7 @@ export default function IntervalStart() {
     // 'Warmup' transitions into rep
     if (activeMode === "Warmup") {
       setActiveMode("Work");
+      setCurrentRep(1);
       setCurrentTimeLeft(interval.repTime);
       return;
     }
@@ -179,21 +180,24 @@ export default function IntervalStart() {
             {interval.repCount * interval.setCount}
           </ThemedText>
 
+          {activeMode != "Finished" ? (
+
           <View style={{ flexDirection: "row" }}>
             <TouchableOpacity
               onPress={() => setPaused((p) => !p)}
               style={styles.button}
             >
-              <ThemedText style={styles.buttonText}>
+              <Text style={styles.buttonText}>
                 {paused ? "Resume" : "Pause"}
-              </ThemedText>
+              </Text>
               {paused ? (
-                <FontAwesome6 name="play" size={20} color="black" />
+                <FontAwesome6 name="play" size={24} color="black" />
               ) : (
-                <FontAwesome6 name="pause" size={20} color="black" />
+                <FontAwesome6 name="pause" size={24} color="black" />
               )}
             </TouchableOpacity>
           </View>
+          ) : <Text style={[styles.infoText, {padding:8}]}>Good effort!</Text>}
 
           <View style={{ flex: 1 }}></View>
         </>
@@ -203,6 +207,11 @@ export default function IntervalStart() {
 }
 
 const styles = StyleSheet.create({
+  infoText:{
+    fontFamily: "QuickSand",
+    textAlign: "center",
+    fontSize: 16,
+  },
   container: {
     flex: 1,
     justifyContent: "center",
@@ -243,12 +252,14 @@ const styles = StyleSheet.create({
     marginTop: 30,
     padding: 12,
     borderRadius: 10,
-    borderWidth: 2,
+    borderWidth: 3,
     textAlign: "center",
     alignItems: "center",
   },
   buttonText: {
-    fontSize: 18,
+    fontFamily: "QuickSand",
+    fontSize: 32,
+    // fontSize: 64,
     fontWeight: "bold",
   },
 });
