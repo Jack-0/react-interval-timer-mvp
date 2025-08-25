@@ -37,7 +37,6 @@ export default function IntervalStart() {
 
     /** Every second check if we have ran the timer down to zero. Once we have handlePhaseEnd() */
     timerRef.current = setInterval(() => {
-      console.log(currentTimeLeft);
       if (!paused) {
         setCurrentTimeLeft((prev) => {
           if (prev > 1) return prev - 1;
