@@ -6,7 +6,7 @@ export default function FeatureLayout() {
     <IntervalsProvider>
       <Stack
         screenOptions={{ headerShown: false }}
-        initialRouteName="Intervals"
+        initialRouteName="IntervalsList"
       >
         {/* <Stack.Screen
         name="IntervalForm"
