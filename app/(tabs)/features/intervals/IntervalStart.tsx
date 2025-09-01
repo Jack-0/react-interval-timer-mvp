@@ -206,7 +206,7 @@ export default function IntervalStart() {
             <TouchableOpacity
               onPress={() =>
                 router.push({
-                  pathname: "/(tabs)/features/intervals/Intervals",
+                  pathname: "/(tabs)/features/intervals/IntervalsList",
                 })
               }
               style={styles.button}
